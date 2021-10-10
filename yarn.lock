@@ -1361,6 +1361,14 @@
   dependencies:
     "@chakra-ui/utils" "1.8.2"
 
+"@chakra-ui/icons@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.15.tgz#90b0e3c2c161c5a100d6b83a277941b22945f880"
+  integrity sha512-MMuPwmeCil9vAXceIN/Fxn6CNHbhkLofFQaKUfs+UaBsviiU2tvS0nqGaxm/9FNzLr5ithPVWpbz3uV7DXc77g==
+  dependencies:
+    "@chakra-ui/icon" "1.1.11"
+    "@types/react" "^17.0.0"
+
 "@chakra-ui/image@1.0.20":
   version "1.0.20"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-1.0.20.tgz#18057ca248f17c813ad60812ac4c7965a1de1fda"
@@ -2213,6 +2221,11 @@
     prop-types "^15.7.2"
     tslib "^2.1.0"
 
+"@reach/observe-rect@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
+  integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
+
 "@reach/utils@0.13.2":
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.13.2.tgz#87e8fef8ebfe583fa48250238a1a3ed03189fcc8"
@@ -2662,7 +2675,7 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^17.0.14":
+"@types/react@*", "@types/react@^17.0.0", "@types/react@^17.0.14":
   version "17.0.27"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.27.tgz#6498ed9b3ad117e818deb5525fa1946c09f2e0e6"
   integrity sha512-zgiJwtsggVGtr53MndV7jfiUESTqrbxOcBvwfe6KS/9bzaVPCTDieTWnFNecVNx6EAaapg5xsLLWFfHHR437AA==
@@ -10277,6 +10290,13 @@ react-style-singleton@^2.1.0:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
     tslib "^1.0.0"
+
+react-virtual@^2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/react-virtual/-/react-virtual-2.8.2.tgz#e204b30c57c426bd260ed1ac49f8b1099e92b7cb"
+  integrity sha512-CwnvF/3Jev4M14S9S7fgzGc0UFQ/bG/VXbrUCq+AB0zH8WGnVDTG0lQT7O3jPY76YLPzTHBu+AMl64Stp8+exg==
+  dependencies:
+    "@reach/observe-rect" "^1.1.0"
 
 react@^17.0.2:
   version "17.0.2"

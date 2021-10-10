@@ -7,7 +7,13 @@ export const Header: React.FC = () => {
   const location = useLocation();
 
   return (
-    <chakra.header py={6}>
+    <chakra.header
+      py={6}
+      px={8}
+      mx={-8}
+      mb={6}
+      boxShadow="sm"
+    >
       <Stack direction={["column", "row"]} spacing="24px">
         <NavLink
           to={{ pathname: "/", state: { from: location.pathname } }}

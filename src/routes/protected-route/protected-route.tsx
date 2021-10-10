@@ -8,10 +8,7 @@ type TProtectedRouteProps = RouteProps & {
   component: JSX.Element | React.FC;
 };
 
-export const ProtectedRoute: React.FC<TProtectedRouteProps> = ({
-  component: Component,
-  ...rest
-}) => {
+export const ProtectedRoute: React.FC<TProtectedRouteProps> = ({ component: Component, ...rest }) => {
   const { authorized } = useSelector((state: TStore) => state.authReducer);
   const location = useLocation();
   const state = location.state as TLocationState;
@@ -26,7 +23,7 @@ export const ProtectedRoute: React.FC<TProtectedRouteProps> = ({
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: props.location, redirectedFrom: state.from },
+              state: { from: props.location, redirectedFrom: state?.from },
             }}
           />
         )

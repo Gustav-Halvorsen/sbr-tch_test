@@ -12,7 +12,15 @@ const mainLayoutShadow = `
 
 export const MainLayout: React.FC = ({ children }) => {
   return (
-    <Box maxW={1280} w="100%" bg="white" h="100vh" m="0 auto" px={8} boxShadow={mainLayoutShadow}>
+    <Box
+      maxW={1280}
+      w="100%"
+      bg="white"
+      h="100vh"
+      m="0 auto"
+      px={8}
+      boxShadow={mainLayoutShadow}
+    >
       <Header />
       {children}
     </Box>

@@ -16,9 +16,9 @@ export const MainLayout: React.FC = ({ children }) => {
       maxW={1280}
       w="100%"
       bg="white"
-      h="100vh"
       m="0 auto"
       px={8}
+      pb={6}
       boxShadow={mainLayoutShadow}
     >
       <Header />

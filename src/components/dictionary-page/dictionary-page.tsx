@@ -1,10 +1,9 @@
-import { Box, Button, Flex, Heading, Input, Text, useDisclosure } from "@chakra-ui/react";
-
+import { Box, Button, Flex, Heading, Input, Spinner, Text, useDisclosure, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import type { TDictionary } from "./data";
 import mockData from "mock/MOCK_DATA.json";
-import { DictionaryList } from "../dictionary-list";
-import { NewDictionaryModal } from "../new-dictionary-modal";
+import { DictionaryList, NewDictionaryModal } from "components";
+import { useDebounce } from "hooks";
+import { TDictionary } from "types";
 
 export const DictionaryPage: React.FC = () => {
   const [dictionaries, setDictionaries] = useState<TDictionary[]>(mockData);
@@ -15,12 +14,35 @@ export const DictionaryPage: React.FC = () => {
     title: "",
     description: "",
   });
+  const [isFiltering, setFiltering] = useState(false);
+  const debouncedFilterValue = useDebounce<string>(filterValue, 300);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const notification = useToast();
+
+  useEffect(() => {
+    if (filterValue !== "" && debouncedFilterValue === "") {
+      setFiltering(true);
+    }
+  }, [filterValue, debouncedFilterValue]);
+
+  useEffect(() => {
+    if (debouncedFilterValue) {
+      setFilteredDictionaries(
+        dictionaries.filter((dictionary) => {
+          return dictionary.title.includes(debouncedFilterValue);
+        })
+      );
+
+      setFiltering(false);
+    }
+  }, [debouncedFilterValue]);
 
   const handleFilterInputChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     setFilterValue(evt.target.value);
   };
-  const handleDelete = (id: string): void => {
+
+  const handleDictionaryDelete = (id: string): void => {
     if (filteredDictionaries.length > 0) {
       setFilteredDictionaries((state) => {
         return state.filter((dictionary) => dictionary.id !== id);
@@ -30,12 +52,14 @@ export const DictionaryPage: React.FC = () => {
       return state.filter((dictionary) => dictionary.id !== id);
     });
   };
+
   const resetNewDictionaryForm = (): void =>
     setNewDictionaryForm({
       id: "",
       title: "",
       description: "",
     });
+
   const handleChangeNewDictionaryForm = (evt: React.ChangeEvent<HTMLInputElement>): void => {
     const { name } = evt.target;
     setNewDictionaryForm((prevData) => ({
@@ -43,6 +67,7 @@ export const DictionaryPage: React.FC = () => {
       [name]: evt.target.value,
     }));
   };
+
   const handleAddDictionary = (): void => {
     resetNewDictionaryForm();
     setDictionaries((dictionaries) => [
@@ -50,33 +75,36 @@ export const DictionaryPage: React.FC = () => {
       ...dictionaries,
     ]);
     onClose();
+    notification({
+      title: "Справочник добавлен",
+      description: newDictionaryForm.title,
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
   };
 
-  useEffect(() => {
-    if (filterValue) {
-      setFilteredDictionaries(
-        dictionaries.filter((dictionary) => {
-          return dictionary.title.includes(filterValue);
-        })
+  const renderDictionariesList = (): JSX.Element => {
+    if (debouncedFilterValue && filteredDictionaries.length > 0) {
+      return <DictionaryList onDelete={handleDictionaryDelete} dictionaries={filteredDictionaries} />;
+    } else if (debouncedFilterValue && filteredDictionaries.length === 0) {
+      return (
+        <Flex justify={"center"} mt={8}>
+          <Text fontSize={"xl"}>Ничего не найдено</Text>
+        </Flex>
       );
     }
-  }, [filterValue]);
-
-  const renderList = (): JSX.Element => {
-    if (filterValue && filteredDictionaries.length > 0) {
-      return <DictionaryList onDelete={handleDelete} dictionaries={filteredDictionaries} />;
-    } else if (filterValue && filteredDictionaries.length === 0) {
-      return <Text>Ничего не найдено</Text>;
-    }
-    return <DictionaryList onDelete={handleDelete} dictionaries={dictionaries} />;
+    return <DictionaryList onDelete={handleDictionaryDelete} dictionaries={dictionaries} />;
   };
 
   return (
     <>
       <Box h="calc(100% - 96px)">
         <Flex align={"center"} justify={"space-between"} mb={8}>
-          <Heading as="h3">Dictionary</Heading>
-          <Button ml={"auto"} colorScheme={"green"} onClick={onOpen}>
+          <Heading as="h3" fontWeight={500} mb={8}>
+            Справочники
+          </Heading>
+          <Button ml={"auto"} colorScheme={"blue"} onClick={onOpen}>
             Добавить
           </Button>
         </Flex>
@@ -89,7 +117,13 @@ export const DictionaryPage: React.FC = () => {
           size="lg"
           mb={4}
         />
-        {renderList()}
+        {isFiltering ? (
+          <Flex justify={"center"} mt={8}>
+            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+          </Flex>
+        ) : (
+          renderDictionariesList()
+        )}
       </Box>
       <NewDictionaryModal
         data={newDictionaryForm}

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { TDictionary } from "../dictionary-page/data";
+import { TDictionary } from "types";
 import {
   Button,
   FormControl,
@@ -67,10 +67,16 @@ export const NewDictionaryModal: React.FC<TNewDictionaryModalProps> = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={onSubmit} colorScheme="blue" mr={3}>
+            <Button onClick={handleClose} mr={3}>
+              Cancel
+            </Button>
+            <Button
+              onClick={onSubmit}
+              colorScheme="blue"
+              disabled={data.title === "" || data.description === ""}
+            >
               Save
             </Button>
-            <Button onClick={handleClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

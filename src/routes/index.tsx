@@ -1,12 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import {
-  AboutPage,
-  DictionaryPage,
-  HomePage,
-  LoginPage,
-  NotFoundPage,
-} from "pages";
+import { AboutPage, DictionaryPage, HomePage, LoginPage, NotFoundPage } from "pages";
 import { ProtectedRoute } from "./protected-route";
 
 export const Routes: React.FC = () => {

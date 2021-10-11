@@ -18,7 +18,7 @@ import {
   CloseButton,
 } from "@chakra-ui/react";
 
-import { signIn } from "../../services/slices/user";
+import { signIn } from "services/slices/user";
 
 export const LoginPage: React.FC = () => {
   const [signInData, setSignInData] = useState({

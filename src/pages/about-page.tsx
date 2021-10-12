@@ -9,12 +9,14 @@ export const AboutPage: React.FC = () => {
         О приложении
       </Heading>
       <Grid
-        templateRows={"repeat(1, 1fr)"}
         templateColumns={{
           base: "repeat(1, 1fr)",
           md: "repeat(4, 1fr)",
         }}
-        gap={6}
+        gap={{
+          base: "24px 0",
+          md: 6,
+        }}
       >
         <GridItem>
           <Image src={avatar} alt="Waiting dog" />
